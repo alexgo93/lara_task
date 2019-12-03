@@ -4,16 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Feedback;
 use App\Http\Requests\FeedbackRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class FeedbackController extends Controller
 {
-    public function viewForm(Request $request)
+    /**
+     * View form
+     *
+     * @return Response
+     */
+    public function viewForm()
     {
         return view('welcome');
     }
 
-    public function checkForm(FeedbackRequest $request)
+    /**
+     * Save form in database
+     *
+     * @param FeedbackRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function saveForm(FeedbackRequest $request): RedirectResponse
     {
         $feedback = new Feedback([
             'name' => $request->name,
@@ -22,70 +38,68 @@ class FeedbackController extends Controller
             'message' => $request->message
         ]);
         $feedback->save();
-        dump($feedback);
+        return Redirect::to('/')
+            ->with('success', 'Greate! Feedback created successfully.');
     }
 
 
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
-        $feedbacks = Feedback::orderBy('id', 'desc')
-            ->paginate(10);
+        $feedbacks = Feedback::all();
         return view('feedback.index')->with('feedbacks', $feedbacks);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create()
+    public function create(): Response
     {
-        return view('feedback.create');
+        return view('welcome');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param integer $id
+     *
+     * @return View
      */
-    public function store(Request $request)
+    public function show(int $id): View
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'message' => 'required'
-        ]);
-
-        Feedback::create($request->all());
-
-        return Redirect::to('feedback')
-            ->with('success', 'Greate! Feedback created successfully.');
+        $feedback = Feedback::where(['id' => $id])->first();
+        $feedback->status = 'viewed';
+        $feedback->save();
+        return view('feedback.view', $feedback);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Product $product
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     *
+     * @return View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
-        $where = array('id' => $id);
-        $data = Feedback::where($where)->first();
+        $feedback = Feedback::where(['id' => $id])->first();
 
-        return view('feedback.edit', $data);
+        return view('feedback.edit', $feedback);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param integer $id
+     *
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $request->validate([
             'name' => 'required',
@@ -94,10 +108,10 @@ class FeedbackController extends Controller
             'message' => 'required'
         ]);
 
-        $update = ['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'message' => $request->message];
+        $update = ['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'message' => $request->message, 'status' => 'viewed'];
         Feedback::where('id', $id)->update($update);
 
-        return Redirect::to('feedback')
+        return Redirect::to('feedbacks')
             ->with('success', 'Great! Product updated successfully');
     }
 
@@ -105,13 +119,14 @@ class FeedbackController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param integer $id
+     *
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        Feedback::where('id',$id)->delete();
+        Feedback::where(['id' => $id])->delete();
 
-        return Redirect::to('feedback')->with('success','Product deleted successfully');
+        return Redirect::to('feedbacks')->with('success', 'Product deleted successfully');
     }
 }

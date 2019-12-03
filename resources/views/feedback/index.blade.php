@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Dashboard</div>
 
@@ -14,11 +14,9 @@
                             </div>
                         @endif
 
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-8 col-md-offset-2">
+
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Feedback admin  <a href="/feedback/create" class="btn btn-success"> + Create</a></div>
+                                        <div class="panel-heading">Feedback admin  <a href="/" class="btn btn-success"> + Create</a></div>
                                         <div class="panel-body">
                                             <table class="table">
                                                 <thead>
@@ -27,8 +25,10 @@
                                                     <th>Name</th>
                                                     <th>Email</th>
                                                     <th>Phone</th>
-                                                    <th>Message</th>
                                                     <th>Status</th>
+                                                    <th>Created at</th>
+                                                    <th>Updated at</th>
+                                                    <th class="text-center">Options</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -38,12 +38,17 @@
                                                         <td>{{ $feedback->name }}</td>
                                                         <td>{{ $feedback->email }}</td>
                                                         <td>{{ $feedback->phone }}</td>
-                                                        <td>{{ $feedback->message }}</td>
                                                         <td>{{ $feedback->status }}</td>
-                                                        <td style="text-align:right;">
-                                                            <a href="/feedback/{{ $feedback->id }}" class="btn btn-info">View</a>
-                                                            <a href="/feedback/{{ $feedback->id }}/edit" class="btn btn-success">Edit</a>
-                                                            <a href="/feedback/{{ $feedback->id }}/destroy" class="btn btn-danger">Delete</a>
+                                                        <td>{{ $feedback->created_at }}</td>
+                                                        <td>{{ $feedback->updated_at }}</td>
+                                                        <td style="text-align:center;">
+                                                            <a href="{{ route('feedbacks.edit', $feedback->id) }}" class="btn btn-success">Edit</a>
+                                                            <form action="{{ route('feedbacks.destroy', $feedback->id)}}" method="post">
+                                                                {{ csrf_field() }}
+                                                                @method('DELETE')
+                                                                <button class="btn btn-danger" type="submit">Delete</button>
+                                                            </form>
+                                                            <a href="{{ route('feedbacks.show', $feedback->id) }}" class="btn btn-info">View</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -51,9 +56,6 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

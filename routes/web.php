@@ -13,8 +13,10 @@
 
 
 Route::get('/', 'FeedbackController@viewForm');
-Route::post('/', 'FeedbackController@checkForm');
-Route::resource('feedbacks', 'FeedbackController');
+Route::post('/', 'FeedbackController@saveForm');
+Route::resource('feedbacks', 'FeedbackController')->except([
+    'store'
+]);
 
 Auth::routes();
 
