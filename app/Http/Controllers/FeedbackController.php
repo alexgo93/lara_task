@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Feedback;
+use App\FeedbackInfromation;
 use App\Http\Requests\FeedbackRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -108,8 +110,18 @@ class FeedbackController extends Controller
             'message' => 'required'
         ]);
 
-        $update = ['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'message' => $request->message, 'status' => 'viewed'];
+        $update = ['name' => $request->name, 'email' => $request->email, 'phone' => $request->phone, 'message' => $request->message, 'status' => $request->status];
         Feedback::where('id', $id)->update($update);
+
+        $feedback = Feedback::where('id', $id)->first();
+        $user = Auth::id();
+        $feedbackId = $feedback->id;
+
+        $feedbackInformation = new FeedbackInfromation([
+            'user_id' => $user,
+            'feedback_id' => $feedbackId,
+        ]);
+        $feedbackInformation->save();
 
         return Redirect::to('feedbacks')
             ->with('success', 'Great! Product updated successfully');

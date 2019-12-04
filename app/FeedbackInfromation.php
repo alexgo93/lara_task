@@ -13,4 +13,11 @@ class FeedbackInfromation extends Model
      * @var string
      */
     protected $table = 'feedback_information';
+
+    protected $fillable = ['user_id', 'feedback_id'];
+
+    public function getLogs($feedbackId)
+    {
+        return $this->where('feedback_id', $feedbackId)->get();
+    }
 }

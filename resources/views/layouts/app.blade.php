@@ -67,6 +67,9 @@
                                     </form>
                                 </div>
                             </li>
+                            <li>
+                                <a href="{{ url('/feedbacks') }}" class="btn btn-outline-primary">All feedbacks</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

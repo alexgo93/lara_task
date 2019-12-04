@@ -26,11 +26,21 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <strong>Product Code</strong>
+                    <strong>Email</strong>
                     <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter Email" value="{{ $email }}">
                     @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <strong>Status</strong>
+                    <select class="form-control form-control-sm" name="status" type="text">
+                        <option value="new">new</option>
+                        <option value="viewed">viewed</option>
+                    </select>
+{{--                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter Email" value="{{ $email }}">--}}
                 </div>
             </div>
             <div class="col-md-12">

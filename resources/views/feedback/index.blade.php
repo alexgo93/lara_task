@@ -16,7 +16,6 @@
 
 
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Feedback admin  <a href="/" class="btn btn-success"> + Create</a></div>
                                         <div class="panel-body">
                                             <table class="table">
                                                 <thead>
@@ -49,6 +48,7 @@
                                                                 <button class="btn btn-danger" type="submit">Delete</button>
                                                             </form>
                                                             <a href="{{ route('feedbacks.show', $feedback->id) }}" class="btn btn-info">View</a>
+                                                            <a href="{{ route('info', $feedback->id) }}" class="btn btn-success">Logs</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

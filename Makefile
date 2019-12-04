@@ -12,3 +12,7 @@ clear-route:
 	php artisan route:clear
 clear-view:
 	php artisan view:clear
+migrate:
+	php artisan migrate
+key:
+	php artisan key:generate

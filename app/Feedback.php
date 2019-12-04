@@ -15,4 +15,9 @@ class Feedback extends Model
      * @var string
      */
     protected $table = 'feedback';
+
+//    public function users()
+//    {
+//        return $this->belongsToMany('App\User');
+//    }
 }

@@ -69,4 +69,17 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    /**
+     * Close registration routes
+     */
+    public function register(Request $request)
+    {
+        return redirect('/');
+    }
+
+    public function showRegistrationForm()
+    {
+        return redirect('/');
+    }
 }

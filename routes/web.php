@@ -12,11 +12,18 @@
 */
 
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'FeedbackController@viewForm');
 Route::post('/', 'FeedbackController@saveForm');
-Route::resource('feedbacks', 'FeedbackController')->except([
-    'store'
-]);
+
+Route::group(['middleware' => ['feedbacks']], function () {
+    Route::resource('feedbacks', 'FeedbackController')->except([
+        'store'
+    ]);
+});
+
+Route::get('/feedback-info/{id}', 'FeedbackInformationController@showLog')->name('info');
 
 Auth::routes();
 

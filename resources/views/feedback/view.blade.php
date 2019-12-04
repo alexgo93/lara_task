@@ -46,6 +46,8 @@
                                                     @method('DELETE')
                                                     <button class="btn btn-danger" type="submit">Delete</button>
                                                 </form>
+
+                                                <a href="{{ route('info', $id) }}" class="btn btn-success">Logs</a>
                                             </td>
                                         </tr>
                                     </tbody>

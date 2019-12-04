@@ -45,7 +45,6 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: lara_task_home
-      MYSQL_ROOT_PASSWORD: test
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:

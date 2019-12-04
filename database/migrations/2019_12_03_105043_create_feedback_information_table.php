@@ -17,7 +17,7 @@ class CreateFeedbackInformationTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('feedback_id');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 
