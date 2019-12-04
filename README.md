@@ -18,18 +18,20 @@
 >create database {YOUR_DATABASE_NAME};  
 >exit  
 
-### Write connection options to your db in .env file like that
-
-DB_CONNECTION=mysql  
-DB_HOST=db  
-DB_PORT=3306  
-DB_DATABASE={YOUR_DATABASE_NAME}  
-DB_USERNAME={YOUR_DATABASE_USER}  
-DB_PASSWORD={YOUR_DATABASE_PASSWORD}  
-
 ### Go inside app container
 
 > docker-compose exec app bash
+
+### Write connection options to your db in .env file like that
+
+> nano .env
+ 
+ DB_CONNECTION=mysql  
+ DB_HOST=db  
+ DB_PORT=3306  
+ DB_DATABASE={YOUR_DATABASE_NAME}  
+ DB_USERNAME={YOUR_DATABASE_USER}  
+ DB_PASSWORD={YOUR_DATABASE_PASSWORD}  
 
 ### Inside app-container bash generate key for your app
 
